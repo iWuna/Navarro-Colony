@@ -94,7 +94,7 @@
 
 /mob/proc/say_quote(var/message, var/datum/language/speaking = null)
 	var/verb = "says"
-	var/ending = copytext(message, length(message))
+	var/ending = copytext_char(message, length_char(message))
 
 	if(speaking)
 		verb = speaking.get_spoken_verb(ending)
@@ -119,7 +119,7 @@
 	return get_turf(src)
 
 /proc/say_test(var/text)
-	var/ending = copytext(text, length(text))
+	var/ending = copytext_char(text, length_char(text))
 	if(ending == "?")
 		return "1"
 	else if(ending == "!")
@@ -130,11 +130,11 @@
 //returns the message mode string or null for no message mode.
 //standard mode is the mode returned for the special ';' radio code.
 /mob/proc/parse_message_mode(var/message, var/standard_mode = "headset")
-	if(length(message) >= 1 && copytext(message, 1, 2) == ";")
+	if(length_char(message) >= 1 && copytext_char(message, 1, 2) == ";")
 		return standard_mode
 
-	if(length(message) >= 2)
-		var/channel_prefix = copytext(message, 1, 3)
+	if(length_char(message) >= 2)
+		var/channel_prefix = copytext_char(message, 1, 3)
 		return department_radio_keys[channel_prefix]
 
 	return null
@@ -151,12 +151,12 @@
 
 /mob/proc/find_valid_prefixes(message)
 	var/list/prefixes = list() // [["Common", start, end], ["Gutter", start, end]]
-	for(var/i in 1 to length(message))
+	for(var/i in 1 to length_char(message))
 		// This grabs 3 character substrings, to allow for up to 1 prefix, 1 letter language key, and one post-key character to more strictly control where the language breaks happen
-		var/selection = trim_right(copytext(message, i, i + 3)) // VOREStation Edit: We use uppercase keys to avoid Polaris key duplication, but this had lowertext() in it
+		var/selection = trim_right(copytext_char(message, i, i + 3)) // VOREStation Edit: We use uppercase keys to avoid Polaris key duplication, but this had lowertext() in it
 		// The first character in the selection will always be the prefix (if this is a valid language invocation)
-		var/prefix = copytext(selection, 1, 2)
-		var/language_key = copytext(selection, 2, 3)
+		var/prefix = copytext_char(selection, 1, 2)
+		var/language_key = copytext_char(selection, 2, 3)
 		if(is_language_prefix(prefix))
 			// Okay, we're definitely now trying to invoke a language (probably)
 			// This "[]" is probably unnecessary but BYOND will runtime if a number is used
@@ -171,16 +171,16 @@
 				continue
 
 			if(client && (client.prefs.multilingual_mode in list(MULTILINGUAL_DEFAULT)))
-				selection = copytext(selection, 1, 3) // These modes only use two characters, not three
+				selection = copytext_char(selection, 1, 3) // These modes only use two characters, not three
 
 			// It's kinda silly that we have to check L != null and this isn't done for us by can_speak (it runtimes instead), but w/e
 			if(L && can_speak(L))
 				// So we have a valid language invocation, and we can speak that language, let's make a piece for it
 				// This language will be the language until the next prefixes[] index, or the end of the message if there are none.
-				prefixes[++prefixes.len] = list(L, i, i + length(selection))
+				prefixes[++prefixes.len] = list(L, i, i + length_char(selection))
 			else if(L)
 				// We found a valid language, but they can't speak it. Let's make them speak gibberish instead.
-				prefixes[++prefixes.len] = list(GLOB.all_languages[LANGUAGE_GIBBERISH], i, i + length(selection))
+				prefixes[++prefixes.len] = list(GLOB.all_languages[LANGUAGE_GIBBERISH], i, i + length_char(selection))
 			continue
 		if(i == 1)
 			// This covers the case of "no prefixes in use."
@@ -195,18 +195,18 @@
 /mob/proc/strip_prefixes(message, mob/prefixer = null)
 	. = ""
 	var/last_index = 1
-	for(var/i in 1 to length(message))
-		var/selection = trim_right(lowertext(copytext(message, i, i + 2)))
+	for(var/i in 1 to length_char(message))
+		var/selection = trim_right(lowertext(copytext_char(message, i, i + 2)))
 		// The first character in the selection will always be the prefix (if this is a valid language invocation)
-		var/prefix = copytext(selection, 1, 2)
-		var/language_key = copytext(selection, 2, 3)
+		var/prefix = copytext_char(selection, 1, 2)
+		var/language_key = copytext_char(selection, 2, 3)
 		if(is_language_prefix(prefix))
 			var/datum/language/L = GLOB.language_keys["[language_key]"]
 			if(L)
-				. += copytext(message, last_index, i)
+				. += copytext_char(message, last_index, i)
 				last_index = i + 2
-		if(i + 1 > length(message))
-			. += copytext(message, last_index)
+		if(i + 1 > length_char(message))
+			. += copytext_char(message, last_index)
 
 // this returns a structured message with language sections
 // list(/datum/multilingual_say_piece(common, "hi"), /datum/multilingual_say_piece(farwa, "squik"), /datum/multilingual_say_piece(common, "meow!"))
@@ -214,7 +214,7 @@
 	. = list()
 
 	// Noise language is a snowflake.
-	if(copytext(message, 1, 2) == "!" && length(message) > 1)
+	if(copytext_char(message, 1, 2) == "!" && length_char(message) > 1)
 		// Note that list() here is intended
 		// Returning a raw /datum/multilingual_say_piece is supported, but only for hivemind languages
 		// What we actually want is a normal say piece that's all noise lang
@@ -225,7 +225,7 @@
 	if(!LAZYLEN(prefix_locations)) // There are no prefixes... or at least, no _valid_ prefixes.
 		. += new /datum/multilingual_say_piece(get_default_language(), trim(strip_prefixes(message))) // So we'll just strip those pesky things and still make the message.
 
-	for(var/i in 1 to length(prefix_locations))
+	for(var/i in 1 to length_char(prefix_locations))
 		var/current = prefix_locations[i] // ["Common", start, end]
 
 		// There are a few things that will make us want to ignore all other languages in - namely, HIVEMIND languages.
@@ -234,11 +234,11 @@
 			return new /datum/multilingual_say_piece(L, trim(sanitize(strip_prefixes(message))))
 
 		if(i + 1 > length(prefix_locations)) // We are out of lookaheads, that means the rest of the message is in cur lang
-			var/spoke_message = sanitize(handle_autohiss(trim(copytext(message, current[3])), L))
+			var/spoke_message = sanitize(handle_autohiss(trim(copytext_char(message, current[3])), L))
 			. += new /datum/multilingual_say_piece(current[1], spoke_message)
 		else
 			var/next = prefix_locations[i + 1] // We look ahead at the next message to see where we need to stop.
-			var/spoke_message = sanitize(handle_autohiss(trim(copytext(message, current[3], next[2])), L))
+			var/spoke_message = sanitize(handle_autohiss(trim(copytext_char(message, current[3], next[2])), L))
 			. += new /datum/multilingual_say_piece(current[1], spoke_message)
 
 /* These are here purely because it would be hell to try to convert everything over to using the multi-lingual system at once */
