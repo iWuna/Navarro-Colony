@@ -91,7 +91,7 @@ proc/get_radio_key_from_channel(var/channel)
 		if(S.speaking && (S.speaking.flags & NO_STUTTER || S.speaking.flags & SIGNLANG))
 			continue
 
-		if((HULK in mutations) && health >= 25 && length(S.message))
+		if((HULK in mutations) && health >= 25 && length_char(S.message))
 			S.message = "[uppertext(S.message)]!!!"
 			verb = pick("yells","roars","hollers")
 			whispering = 0
@@ -276,7 +276,7 @@ proc/get_radio_key_from_channel(var/channel)
 
 	//VOREStation edit - allows for custom say verbs, overriding all other say-verb types- e.g. "says loudly" instead of "shouts"
 	//You'll still stammer if injured or slur if drunk, but it won't have those specific words
-	var/ending = copytext_char(message, length(message))
+	var/ending = copytext_char(message, length_char(message))
 
 	if(custom_whisper && whispering)
 		verb = "[custom_whisper]"

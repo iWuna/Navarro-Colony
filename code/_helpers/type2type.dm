@@ -16,7 +16,7 @@
 
 	var/num   = 0
 	var/power = 1
-	var/i     = length(hex)
+	var/i     = length_char(hex)
 
 	while (i)
 		var/char = text2ascii(hex, i)
@@ -46,7 +46,7 @@
 		num >>= 4 //go to the next half-byte
 
 	//pad with zeroes
-	var/left = padlength - length(.)
+	var/left = padlength - length_char(.)
 	while (left-- > 0)
 		. = "0[.]"
 

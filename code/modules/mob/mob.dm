@@ -285,12 +285,12 @@
 		to_chat(src, "The game appears to have misplaced your mind datum, so we can't show you your notes.")
 
 /mob/proc/store_memory(msg as message, popup, sane = 1)
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 
 	if (sane)
 		msg = sanitize(msg)
 
-	if (length(memory) == 0)
+	if (length_char(memory) == 0)
 		memory += msg
 	else
 		memory += "<BR>[msg]"
@@ -315,7 +315,7 @@
 /mob/proc/print_flavor_text()
 	if (flavor_text && flavor_text != "")
 		var/msg = replacetext_char(flavor_text, "\n", " ")
-		if(length(msg) <= 40)
+		if(length_char(msg) <= 40)
 			return "<span class='notice'>[msg]</span>"
 		else
 			return "<span class='notice'>[copytext_char_preserve_html(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</span></a>"
@@ -655,7 +655,7 @@
 				GLOB.ahelp_tickets.stat_entry()
 
 
-			if(length(GLOB.sdql2_queries))
+			if(length_char(GLOB.sdql2_queries))
 				if(statpanel("SDQL2"))
 					stat("Access Global SDQL2 List", GLOB.sdql2_vv_statobj)
 					for(var/i in GLOB.sdql2_queries)

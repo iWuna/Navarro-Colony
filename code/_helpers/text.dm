@@ -90,16 +90,16 @@
 	var/output = ""
 
 	for(var/i=1, i<=length_char(input), i++)
-		var/ascii_char = text2ascii(input,i)
+		var/ascii_char = text2ascii_char(input,i)
 		switch(ascii_char)
 			// A  .. Z
-			if(65 to 90)			//Uppercase Letters
+			if(65 to 90, 1040 to 1071, 1025)			//Uppercase Letters
 				output += ascii2text(ascii_char)
 				number_of_alphanumeric++
 				last_char_group = 4
 
 			// a  .. z
-			if(97 to 122)			//Lowercase Letters
+			if(97 to 122, 1072 to 1103, 1105)			//Lowercase Letters
 				if(last_char_group<2)		output += ascii2text(ascii_char-32)	//Force uppercase first character
 				else						output += ascii2text(ascii_char)
 				number_of_alphanumeric++
@@ -148,7 +148,7 @@
 	if(length_char(text) > max_length_char)	return			//message too long
 	var/non_whitespace = 0
 	for(var/i=1, i<=length_char(text), i++)
-		switch(text2ascii(text,i))
+		switch(text2ascii_char(text,i))
 			if(62,60,92,47)	return			//rejects the text if it contains these bad characters: <, >, \ or /
 			if(127 to 255)	return			//rejects weird letters like �
 			if(0 to 31)		return			//more weird stuff
@@ -190,7 +190,7 @@
 /proc/dd_hasprefix_case(text, prefix)
 	var/start = 1
 	var/end = length_char(prefix) + 1
-	return findtextEx(text, prefix, start, end)
+	return findtextEx_char(text, prefix, start, end)
 
 //Checks the end of a string for a specified substring.
 //Returns the position of the substring or 0 if it was not found
@@ -205,7 +205,7 @@
 /proc/dd_hassuffix_case(text, suffix)
 	var/start = length_char(text) - length_char(suffix)
 	if(start)
-		return findtextEx(text, suffix, start, null)
+		return findtextEx_char(text, suffix, start, null)
 
 /*
  * Text modification

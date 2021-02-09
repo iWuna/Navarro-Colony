@@ -414,7 +414,7 @@
   */
 /obj/machinery/computer/med_data/proc/print_finish()
 	var/obj/item/weapon/paper/P = new(loc)
-	P.info = "<center><b>Medical Record</b></center><br>"
+	P.info = "<meta charset='utf-8'><center><b>Medical Record</b></center><br>"
 	if(istype(active1, /datum/data/record) && data_core.general.Find(active1))
 		P.info += {"Name: [active1.fields["name"]] ID: [active1.fields["id"]]
 		<br>\nSex: [active1.fields["sex"]]

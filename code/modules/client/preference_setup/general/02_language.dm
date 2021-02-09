@@ -1,5 +1,5 @@
 /datum/category_item/player_setup_item/general/language
-	name = "Language"
+	name = "Язык"
 	sort_order = 2
 	var/static/list/forbidden_prefixes = list(";", ":", ".", "!", "*", "^", "-")
 
@@ -32,7 +32,7 @@
 			pref.language_prefixes -= prefix
 
 /datum/category_item/player_setup_item/general/language/content()
-	. += "<b>Languages</b><br>"
+	. += "<b>Языки</b><br>"
 	var/datum/species/S = GLOB.all_species[pref.species]
 	if(S.language)
 		. += "- [S.language]<br>"
@@ -42,15 +42,15 @@
 		if(pref.alternate_languages.len)
 			for(var/i = 1 to pref.alternate_languages.len)
 				var/lang = pref.alternate_languages[i]
-				. += "- [lang] - <a href='?src=\ref[src];remove_language=[i]'>remove</a><br>"
+				. += "- [lang] - <a href='?src=\ref[src];remove_language=[i]'>убрать</a><br>"
 
 		if(pref.alternate_languages.len < pref.numlanguage()) //CHOMPEdit
-			. += "- <a href='?src=\ref[src];add_language=1'>add</a> ([pref.numlanguage() - pref.alternate_languages.len] remaining)<br>"	//CHOMPEdit
+			. += "- <a href='?src=\ref[src];add_language=1'>добавить</a> ([pref.numlanguage() - pref.alternate_languages.len] осталось)<br>"	//CHOMPEdit
 	else
 		. += "- [pref.species] cannot choose secondary languages.<br>"
 
 	. += "<b>Language Keys</b><br>"
-	. += " [jointext(pref.language_prefixes, " ")] <a href='?src=\ref[src];change_prefix=1'>Change</a> <a href='?src=\ref[src];reset_prefix=1'>Reset</a><br>"
+	. += " [jointext(pref.language_prefixes, " ")] <a href='?src=\ref[src];change_prefix=1'>Изменить</a> <a href='?src=\ref[src];reset_prefix=1'>Сброс</a><br>"
 
 /datum/category_item/player_setup_item/general/language/OnTopic(var/href,var/list/href_list, var/mob/user)
 	if(href_list["remove_language"])
