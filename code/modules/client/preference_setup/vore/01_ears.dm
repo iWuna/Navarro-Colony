@@ -1,6 +1,7 @@
 // Global stuff that will put us on the map
+
 /datum/category_group/player_setup_category/vore
-	name = "VORE"
+	name = "Custom Species"
 	sort_order = 8
 	category_item_type = /datum/category_item/player_setup_item/vore
 
@@ -186,7 +187,7 @@
 
 
 /datum/category_item/player_setup_item/vore/ears/content(var/mob/user)
-	. += "<h2>VORE Station Settings</h2>"
+	. += "<h2>Species Settings</h2>"
 
 	var/ear_display = "Normal"
 	if(pref.ear_style && (pref.ear_style in ear_styles_list))

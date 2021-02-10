@@ -14,32 +14,32 @@ var/global/list/seen_religions = list()
 	return
 
 var/global/list/citizenship_choices = list(
-	"Earth",
-	"Mars",
-	"Sif",
-	"Binma",
-	"Moghes",
-	"Meralar",
+	"Земля",
+	"Марс",
+	"Сиф",
+	"Бинма",
+	"Могес",
+	"Мералар",
 	"Qerr'balak"
 	)
 
 var/global/list/home_system_choices = list(
-	"Sol",
-	"Vir",
-	"Nyx",
-	"Tau Ceti",
+	"Солнечная систем",
+	"Вир",
+	"Никс",
+	"Тау Кита",
 	"Qerr'valis",
 	"Epsilon Ursae Minoris",
-	"Rarkajar"
+	"Ракаджар"
 	)
 
 var/global/list/faction_choices = list(
-	"Sol Central",
-	"Vey Med",
-	"Einstein Engines",
-	"Free Trade Union",
-	"NanoTrasen",
-	"Ward-Takahashi GMB",
+	"Земное Правительство",
+	"Вей-Мед",
+	"Эйнштейн Энженс",
+	"Свободный Торговый Союз",
+	"НаноТрейзен",
+	"Уорд-Таканаши",
 	"Gilthari Exports",
 	"Grayson Manufactories Ltd.",
 	"Aether Atmospherics",
@@ -58,15 +58,15 @@ var/global/list/antag_visiblity_choices = list(
 	)
 
 var/global/list/religion_choices = list(
-	"Unitarianism",
+	"Юнитаризм",
 	"Neopaganism",
-	"Islam",
-	"Christianity",
-	"Judaism",
+	"Ислам",
+	"Христианство",
+	"Иудаизм",
 	"Hinduism",
-	"Buddhism",
-	"Pleromanism",
-	"Spectralism",
+	"Буддизм",
+	"Плероманизм",
+	"Спектрализм",
 	"Phact Shintoism",
 	"Kishari Faith",
 	"Hauler Faith",
@@ -74,6 +74,7 @@ var/global/list/religion_choices = list(
 	"Singulitarian Worship",
 	"Xilar Qall",
 	"Tajr-kii Rarkajar",
-	"Agnosticism",
-	"Deism"
+	"Агностицизм",
+	"Деизм",
+	"Юнитология"
 	)

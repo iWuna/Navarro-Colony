@@ -11,16 +11,18 @@
 /mob/living
 	var/datum/vore_look/vorePanel
 
+/*
 /mob/living/proc/insidePanel()
 	set name = "Vore Panel"
 	set category = "IC"
+	set hidden
 
 	if(!vorePanel)
 		log_debug("[src] ([type], \ref[src]) didn't have a vorePanel and tried to use the verb.")
 		vorePanel = new(src)
 
 	vorePanel.tgui_interact(src)
-
+*/
 /mob/living/proc/updateVRPanel() //Panel popup update call from belly events.
 	SStgui.update_uis(vorePanel)
 
@@ -929,7 +931,7 @@
 			qdel(host.vore_selected)
 			host.vore_selected = host.vore_organs[1]
 			. = TRUE
-			
+
 		if("b_vorespawn_blacklist") //CHOMP Addition
 			host.vore_selected.vorespawn_blacklist = !host.vore_selected.vorespawn_blacklist
 			. = TRUE

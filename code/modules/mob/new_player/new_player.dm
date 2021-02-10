@@ -29,19 +29,19 @@
 /mob/new_player/proc/new_player_panel_proc()
 	var/output = "<div align='center'>"
 	output +="<hr>"
-	output += "<p><a href='byond://?src=\ref[src];show_preferences=1'>Character Setup</A></p>"
+	output += "<p><a href='byond://?src=\ref[src];show_preferences=1'>Настройка Персонажа</A></p>"
 
 	if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
 		if(ready)
-			output += "<p>\[ <span class='linkOn'><b>Ready</b></span> | <a href='byond://?src=\ref[src];ready=0'>Not Ready</a> \]</p>"
+			output += "<p>\[ <span class='linkOn'><b>Готов</b></span> | <a href='byond://?src=\ref[src];ready=0'>Не готов</a> \]</p>"
 		else
-			output += "<p>\[ <a href='byond://?src=\ref[src];ready=1'>Ready</a> | <span class='linkOn'><b>Not Ready</b></span> \]</p>"
+			output += "<p>\[ <a href='byond://?src=\ref[src];ready=1'>Готов</a> | <span class='linkOn'><b>Не готов</b></span> \]</p>"
 
 	else
 		output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>"
-		output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
+		output += "<p><a href='byond://?src=\ref[src];late_join=1'>Присоединиться!</A></p>"
 
-	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
+	output += "<p><a href='byond://?src=\ref[src];observe=1'>Наблюдать</A></p>"
 
 	if(!IsGuestKey(src.key))
 		establish_db_connection()
@@ -64,15 +64,15 @@
 				output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
 */
 	if(client.check_for_new_server_news())
-		output += "<p><b><a href='byond://?src=\ref[src];shownews=1'>Show News</A> (NEW!)</b></p>"
+		output += "<p><b><a href='byond://?src=\ref[src];shownews=1'>Новости</A> (NEW!)</b></p>"
 	else
-		output += "<p><a href='byond://?src=\ref[src];shownews=1'>Show News</A></p>"
+		output += "<p><a href='byond://?src=\ref[src];shownews=1'>Новости</A></p>"
 
 	if(SSsqlite.can_submit_feedback(client))
 		output += "<p>[href(src, list("give_feedback" = 1), "Give Feedback")]</p>"
 	output += "</div>"
 
-	panel = new(src, "Welcome","Welcome", 210, 300, src)
+	panel = new(src, "Welcome","Добро пожаловать", 210, 300, src)
 	panel.set_window_options("can_close=0")
 	panel.set_content(output)
 	panel.open()
@@ -82,23 +82,23 @@
 	..()
 
 	if(statpanel("Lobby") && SSticker)
-		stat("Game Mode:", SSticker.hide_mode ? "Secret" : "[config.mode_names[master_mode]]")
+		stat("Игровой режим:", SSticker.hide_mode ? "Секрет" : "[config.mode_names[master_mode]]")
 
 		if(SSvote.mode)
-			stat("Vote: [capitalize(SSvote.mode)]", "Time Left: [SSvote.time_remaining] s")
+			stat("Голосование: [capitalize(SSvote.mode)]", "Осталось времени: [SSvote.time_remaining] s")
 
 		if(SSticker.current_state == GAME_STATE_INIT)
-			stat("Time To Start:", "Server Initializing")
+			stat("Времени до начала:", "Запуск сервера")
 
 		else if(SSticker.current_state == GAME_STATE_PREGAME)
-			stat("Time To Start:", "[round(SSticker.pregame_timeleft,1)][round_progressing ? "" : " (DELAYED)"]")
-			stat("Players: [totalPlayers]", "Players Ready: [totalPlayersReady]")
+			stat("Времени до начала:", "[round(SSticker.pregame_timeleft,1)][round_progressing ? "" : " (ОСТАНОВЛЕНО)"]")
+			stat("Игроков: [totalPlayers]", "Игроков готово: [totalPlayersReady]")
 			totalPlayers = 0
 			totalPlayersReady = 0
 			var/datum/job/refJob = null
 			for(var/mob/new_player/player in player_list)
 				refJob = player.client.prefs.get_highest_job()
-				stat("[player.key]", (player.ready)?("(Playing as: [(refJob)?(refJob.title):("Unknown")])"):(null))
+				stat("[player.key]", (player.ready)?("(Играет как: [(refJob)?(refJob.title):("Unknown")])"):(null))
 				totalPlayers++
 				if(player.ready)totalPlayersReady++
 

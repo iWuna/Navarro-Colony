@@ -46,7 +46,7 @@
 	if(M.no_vore) //If the mob isn't supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
 		return TRUE
 	M.vorePanel = new(M)
-	M.verbs += /mob/living/proc/insidePanel
+//	M.verbs += /mob/living/proc/insidePanel
 	M.verbs += /mob/living/proc/vore_transfer_reagents //CHOMP If mob doesnt have bellies it cant use this verb for anything
 
 	//Tries to load prefs if a client is present otherwise gives freebie stomach

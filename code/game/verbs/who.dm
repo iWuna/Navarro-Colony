@@ -3,7 +3,7 @@
 	set name = "Who"
 	set category = "OOC"
 
-	var/msg = "<b>Current Players:</b>\n"
+	var/msg = "<b>Текущие игроки:</b>\n"
 
 	var/list/Lines = list()
 
@@ -11,20 +11,20 @@
 		for(var/client/C in GLOB.clients)
 			var/entry = "\t[C.key]"
 			if(C.holder && C.holder.fakekey)
-				entry += " <i>(as [C.holder.fakekey])</i>"
-			entry += " - Playing as [C.mob.real_name]"
+				entry += " <i>(как [C.holder.fakekey])</i>"
+			entry += " - Играет как [C.mob.real_name]"
 			switch(C.mob.stat)
 				if(UNCONSCIOUS)
-					entry += " - <font color='darkgray'><b>Unconscious</b></font>"
+					entry += " - <font color='darkgray'><b>Без сознания</b></font>"
 				if(DEAD)
 					if(isobserver(C.mob))
 						var/mob/observer/dead/O = C.mob
 						if(O.started_as_observer)
-							entry += " - <font color='gray'>Observing</font>"
+							entry += " - <font color='gray'>Наблюдает</font>"
 						else
-							entry += " - <font color='black'><b>DEAD</b></font>"
+							entry += " - <font color='black'><b>МЁРТВ</b></font>"
 					else
-						entry += " - <font color='black'><b>DEAD</b></font>"
+						entry += " - <font color='black'><b>МЁРТВ</b></font>"
 
 			var/age
 			if(isnum(C.player_age))
@@ -40,13 +40,13 @@
 			entry += " - [age]"
 
 			if(is_special_character(C.mob))
-				entry += " - <b><font color='red'>Antagonist</font></b>"
+				entry += " - <b><font color='red'>Антагонист</font></b>"
 
 			if(C.is_afk())
 				var/seconds = C.last_activity_seconds()
-				entry += " (AFK - "
-				entry += "[round(seconds / 60)] minutes, "
-				entry += "[seconds % 60] seconds)"
+				entry += " (АФК - "
+				entry += "[round(seconds / 60)] мин, "
+				entry += "[seconds % 60] сек)"
 
 			entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"
 			Lines += entry
@@ -60,7 +60,7 @@
 	for(var/line in sortList(Lines))
 		msg += "[line]\n"
 
-	msg += "<b>Total Players: [length(Lines)]</b>"
+	msg += "<b>Всего игроков: [length(Lines)]</b>"
 	to_chat(src,msg)
 
 /client/verb/staffwho()
@@ -91,20 +91,20 @@
 				msg += "\t[C] is a [C.holder.rank]"
 
 				if(C.holder.fakekey)
-					msg += " <i>(as [C.holder.fakekey])</i>"
+					msg += " <i>(как [C.holder.fakekey])</i>"
 
 				if(isobserver(C.mob))
-					msg += " - Observing"
+					msg += " - Наблюдает"
 				else if(istype(C.mob,/mob/new_player))
-					msg += " - Lobby"
+					msg += " - Лобби"
 				else
-					msg += " - Playing"
+					msg += " - Играет"
 
 				if(C.is_afk())
 					var/seconds = C.last_activity_seconds()
-					msg += " (AFK - "
-					msg += "[round(seconds / 60)] minutes, "
-					msg += "[seconds % 60] seconds)"
+					msg += " (АФК - "
+					msg += "[round(seconds / 60)] мин, "
+					msg += "[seconds % 60] сек)"
 				msg += "\n"
 
 				num_admins_online++
@@ -117,17 +117,17 @@
 					msg += " <i>(as [C.holder.fakekey])</i>"
 
 				if(isobserver(C.mob))
-					modmsg += " - Observing"
+					modmsg += " - Наблюдает"
 				else if(istype(C.mob,/mob/new_player))
-					modmsg += " - Lobby"
+					modmsg += " - Лобби"
 				else
-					modmsg += " - Playing"
+					modmsg += " - Играет"
 
 				if(C.is_afk())
 					var/seconds = C.last_activity_seconds()
-					modmsg += " (AFK - "
-					modmsg += "[round(seconds / 60)] minutes, "
-					modmsg += "[seconds % 60] seconds)"
+					modmsg += " (АФК - "
+					modmsg += "[round(seconds / 60)] мин, "
+					modmsg += "[seconds % 60] сек)"
 				modmsg += "\n"
 				num_mods_online++
 
@@ -136,19 +136,19 @@
 					continue
 				devmsg += "\t[C] is a [C.holder.rank]"
 				if(C.holder.fakekey)
-					devmsg += " <i>(as [C.holder.fakekey])</i>"
+					devmsg += " <i>(как [C.holder.fakekey])</i>"
 				if(isobserver(C.mob))
-					devmsg += " - Observing"
+					devmsg += " - Наблюдает"
 				else if(istype(C.mob,/mob/new_player))
-					devmsg += " - Lobby"
+					devmsg += " - Лобби"
 				else
-					devmsg += " - Playing"
+					devmsg += " - Играет"
 
 				if(C.is_afk())
 					var/seconds = C.last_activity_seconds()
-					devmsg += "(AFK - "
-					devmsg += "[round(seconds / 60)] minutes, "
-					devmsg += "[seconds % 60] seconds)"
+					devmsg += "(АФК - "
+					devmsg += "[round(seconds / 60)] мин, "
+					devmsg += "[seconds % 60] сек)"
 				devmsg += "\n"
 				num_devs_online++
 
@@ -157,19 +157,19 @@
 					continue
 				eventMmsg += "\t[C] is a [C.holder.rank]"
 				if(C.holder.fakekey)
-					eventMmsg += " <i>(as [C.holder.fakekey])</i>"
+					eventMmsg += " <i>(как [C.holder.fakekey])</i>"
 				if(isobserver(C.mob))
-					eventMmsg += " - Observing"
+					eventMmsg += " - Наблюдает"
 				else if(istype(C.mob,/mob/new_player))
-					eventMmsg += " - Lobby"
+					eventMmsg += " - Лобби"
 				else
-					eventMmsg += " - Playing"
+					eventMmsg += " - Играет"
 
 				if(C.is_afk())
 					var/seconds = C.last_activity_seconds()
-					eventMmsg += " (AFK - "
-					eventMmsg += "[round(seconds / 60)] minutes, "
-					eventMmsg += "[seconds % 60] seconds)"
+					eventMmsg += " (АФК - "
+					eventMmsg += "[round(seconds / 60)] мин, "
+					eventMmsg += "[seconds % 60] сек)"
 				eventMmsg += "\n"
 				num_event_managers_online++
 
@@ -192,7 +192,7 @@
 					eventMmsg += "\t[C] is a [C.holder.rank]\n"
 					num_event_managers_online++
 
-	msg = "<b>Current Admins ([num_admins_online]):</b>\n" + msg
+	msg = "<b>Администраторов в сети ([num_admins_online]):</b>\n" + msg
 
 	if(config.show_mods)
 		msg += "\n<b> Current Moderators ([num_mods_online]):</b>\n" + modmsg	//YW EDIT
